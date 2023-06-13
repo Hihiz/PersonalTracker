@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PersonalTracker.Models;
+using PersonalTracker.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +26,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Category}/{action=Index}/{id?}");
 
 app.Run();
