@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using PersonalTracker.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionLocalDb"));
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
