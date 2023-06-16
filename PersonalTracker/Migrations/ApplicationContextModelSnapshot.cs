@@ -44,7 +44,7 @@ namespace PersonalTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("PersonalTracker.Models.Transaction", b =>
@@ -72,7 +72,7 @@ namespace PersonalTracker.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("PersonalTracker.Models.Transaction", b =>
