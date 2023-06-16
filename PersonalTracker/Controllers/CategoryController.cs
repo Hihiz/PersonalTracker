@@ -35,63 +35,34 @@ namespace PersonalTracker.Controllers
             return View(category);
         }
 
-        public IActionResult Create()
+        public IActionResult AddEdit(int id = 0)
         {
-            return View(new Category());
+            if (id == 0)
+            {
+                return View(new Category());
+            }
+            else
+            {
+                return View(_db.Categories.Find(id));
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Icon,Type")] Category category)
+        public async Task<IActionResult> AddEdit([Bind("Id,Title,Icon,Type")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _db.Add(category);
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(category);
-        }
-
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Category category = await _db.Categories.FindAsync(id);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Icon,Type")] Category category)
-        {
-            if (id != category.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (category.Id == 0)
+                {
+                    _db.Add(category);
+                }
+                else
                 {
                     _db.Update(category);
-                    await _db.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-                    return NotFound();
                 }
 
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -137,4 +108,3 @@ namespace PersonalTracker.Controllers
         }
     }
 }
-
