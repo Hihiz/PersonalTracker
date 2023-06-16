@@ -18,6 +18,23 @@ namespace PersonalTracker.Controllers
                  Problem("Categories is null");
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Category category = await _db.Categories.FirstOrDefaultAsync(t => t.Id == id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -29,7 +46,7 @@ namespace PersonalTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.AddAsync(category);
+                _db.Add(category);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
