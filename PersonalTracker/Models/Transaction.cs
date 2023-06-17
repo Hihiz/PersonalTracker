@@ -12,5 +12,24 @@ namespace PersonalTracker.Models
         public string Note { get; set; }
 
         public DateTime Date { get; set; } = DateTime.Now;
+
+        [NotMapped]
+        public string? CategoryTitleWithIcon
+        {
+            get
+            {
+                return Category == null ? "" : Category.Icon + " " + Category.Title;
+            }
+        }
+
+        [NotMapped]
+        public string? FromattedAmount
+        {
+            get
+            {
+                return ((Category == null || Category.Type == "Расход") ? "-" : "+ ") + Amount.ToString("C0");
+            }
+        }
+
     }
 }

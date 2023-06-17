@@ -13,7 +13,7 @@ namespace PersonalTracker.Models
         public string Icon { get; set; } = "";
 
         [Column(TypeName = "nvarchar(10)")]
-        public string Type { get; set; } = "Expense";
+        public string Type { get; set; } = "Расход";
 
         [NotMapped]
         public string? TitleWithIcon
