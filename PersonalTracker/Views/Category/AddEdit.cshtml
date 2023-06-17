@@ -1,7 +1,7 @@
 ﻿@model PersonalTracker.Models.Category
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["PageTitle"] = Model.Id == 0 ? "Создание категории" : "Редактирование категории";
 }
 
 <div class="row">

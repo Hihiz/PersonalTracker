@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<PersonalTracker.Models.Category>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["PageTitle"] = "Categories";
+    ViewData["PageActionText"] = "+ New Category";
+    ViewData["PageActionUrl"] = "/Category/AddEdit";
 }
 
 <div class="row">
@@ -24,24 +26,24 @@
 </div>
 
 <script id="typeColumnTemplate" type="text/x-template">
-    ${if(Type == "Income")}
+    ${if(Type=="Income")}
         <span class="badge bg-success">${Type}</span>
     ${else}
         <span class="badge bg-danger">${Type}</span>
-        ${/if}
+    ${/if}
 </script>
 
-    <script id="actionColumnTemplate" type="text/x-template">
-<div class="d-flex flex-row justify-content-start">
-    <a class="btn btn-sm no-a-decoration" href="/Category/AddEdit/${Id}">
-        <i class="fa-solid fa-pen fa-lg"></i>
+<script id="actionColumnTemplate" type="text/x-template">
+    <div class="d-flex flex-row justify-content-start">
+        <a class="btn btn-sm no-a-decoration" href="/Category/AddEdit/${Id}">
+            <i class="fa-solid fa-pen fa-lg"></i>
         </a>
         <form action="/Category/Delete/${Id}" method="post">
-            @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
             <button type="submit" class="btn btn-sm btn-link no-a-decoration"
-            onclick="return confirm(&quot;Вы точно хотите удалить эту запись?&quot;)">                
+            onclick="return confirm(&quot;Вы точно хотите удалить эту запись?&quot;)">
                 <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
             </button>
-            </form>
-</div>
-    </script>
+        </form>
+    </div>
+</script>
