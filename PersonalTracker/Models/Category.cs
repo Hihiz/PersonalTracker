@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalTracker.Models
 {
@@ -7,6 +8,7 @@ namespace PersonalTracker.Models
         public int Id { get; set; }
 
         [Column(TypeName = "nvarchar(50)")]
+        [Required(ErrorMessage = "Введите название")]
         public string Title { get; set; }
 
         [Column(TypeName = "nvarchar(5)")]
