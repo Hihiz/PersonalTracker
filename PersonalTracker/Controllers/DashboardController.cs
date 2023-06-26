@@ -52,7 +52,7 @@ namespace PersonalTracker.Controllers
                   .OrderByDescending(l => l.amount)
                   .ToList();
 
-            List<SplineChartData> incomeSummary = (List<SplineChartData>)selectedTransactions
+            List<SplineChartData> incomeSummary = selectedTransactions
                 .Where(i => i.Category.Type == "Доход")
                 .GroupBy(j => j.Date)
                 .Select(k => new SplineChartData()
@@ -61,7 +61,7 @@ namespace PersonalTracker.Controllers
                     Income = k.Sum(l => l.Amount)
                 }).ToList();
 
-            List<SplineChartData> expenseSummary = (List<SplineChartData>)selectedTransactions
+            List<SplineChartData> expenseSummary = selectedTransactions
                 .Where(i => i.Category.Type == "Расход")
                 .GroupBy(j => j.Date)
                 .Select(k => new SplineChartData()
@@ -70,7 +70,27 @@ namespace PersonalTracker.Controllers
                     Expense = k.Sum(l => l.Amount)
                 }).ToList();
 
+            string[] last7Days = Enumerable.Range(0, 7)
+                .Select(i => startDate.AddDays(i).ToString("dd-MMM"))
+                .ToArray();
 
+            ViewBag.SplineChartData = from day in last7Days
+                                      join income in incomeSummary on day equals income.Day into dayIncomeJoined
+                                      from income in dayIncomeJoined.DefaultIfEmpty()
+                                      join expense in expenseSummary on day equals expense.Day into expenseJoined
+                                      from expense in expenseJoined.DefaultIfEmpty()
+                                      select new
+                                      {
+                                          day = day,
+                                          income = income == null ? 0 : income.Income,
+                                          expense = expense == null ? 0 : expense.Expense,
+                                      };
+
+            ViewBag.RecentTransactions = await _db.Transactions
+               .Include(i => i.Category)
+               .OrderByDescending(j => j.Date)
+               .Take(5)
+               .ToListAsync();
 
             return View();
         }
