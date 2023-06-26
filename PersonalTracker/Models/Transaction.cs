@@ -29,7 +29,7 @@ namespace PersonalTracker.Models
         }
 
         [NotMapped]
-        public string? FromattedAmount
+        public string? FormattedAmount
         {
             get
             {
